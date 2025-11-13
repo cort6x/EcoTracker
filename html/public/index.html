@@ -18,7 +18,6 @@
             pointer-events: none !important;
             transition: opacity 0.4s ease-in-out;
         }
-        /* Стили для вкладок */
         .tab-button.active {
             border-color: #10b981; /* border-green-500 */
             color: #059669; /* text-green-600 */
@@ -29,7 +28,6 @@
 <body>
     <div id="app" class="min-h-screen flex flex-col items-center p-4">
 
-        <!-- HEADER -->
         <header class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-4 mb-8 flex justify-between items-center border-t-4 border-green-500">
             <h1 class="text-3xl font-bold text-green-700">🌱 Eco-Tracker</h1>
             <div id="user-info" class="flex items-center space-x-4 hidden">
@@ -38,14 +36,10 @@
             </div>
         </header>
         
-        <!-- GLOBAL MESSAGE BOX -->
         <div id="message-box" class="fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg text-white font-medium transition-opacity duration-400 alert-hidden"></div>
 
-        <!-- AUTH VIEW (LOGIN/REGISTER) -->
         <div id="auth-view" class="w-full max-w-sm bg-white p-8 rounded-xl shadow-2xl border-t-4 border-green-500">
             <h2 id="auth-title" class="text-2xl font-semibold mb-6 text-center text-green-700">Вход</h2>
-            
-            <!-- Форма входа -->
             <form id="login-form" class="space-y-4">
                 <div>
                     <label for="login-username" class="block text-sm font-medium text-gray-700">Имя пользователя</label>
@@ -57,8 +51,6 @@
                 </div>
                 <button type="submit" class="w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-150">Войти</button>
             </form>
-
-            <!-- Форма регистрации (скрыта по умолчанию) -->
             <form id="register-form" class="space-y-4 hidden">
                 <div>
                     <label for="register-username" class="block text-sm font-medium text-gray-700">Имя пользователя</label>
@@ -78,19 +70,15 @@
             <button id="toggle-auth-view" class="mt-4 w-full text-sm text-green-600 hover:text-green-800 transition duration-150">Нет аккаунта? Зарегистрируйтесь!</button>
         </div>
 
-        <!-- DASHBOARD VIEW -->
         <div id="dashboard-view" class="w-full max-w-4xl hidden">
             
-            <!-- TABS -->
             <div class="flex border-b border-gray-200 mb-6">
                 <button data-tab="record" class="tab-button active px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:border-green-500 hover:text-green-600 transition">Записать Вклад</button>
                 <button data-tab="report" class="tab-button px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:border-green-500 hover:text-green-600 transition">Отчет и История</button>
-                <!-- НОВЫЙ ТАБ: Методология -->
+            
                 <button data-tab="methodology" class="tab-button px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:border-blue-500 hover:text-blue-600 transition">Методология</button>
                 <button data-tab="admin" id="admin-tab" class="tab-button px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:border-red-500 hover:text-red-600 transition hidden">Админ Панель</button>
             </div>
-
-            <!-- TAB CONTENT: 1. ЗАПИСЬ ВКЛАДА -->
             <div id="tab-record" class="tab-content w-full bg-white p-6 rounded-xl shadow-lg border-t-4 border-green-500">
                 <h2 class="text-2xl font-semibold mb-4 text-green-700">Записать Эко-Действие</h2>
                 <form id="record-form" class="space-y-4">
@@ -259,3 +247,6 @@
 
 
     </div>
+    <script src="main.js"></script>
+    </body>
+</html>
