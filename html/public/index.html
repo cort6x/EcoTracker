@@ -3,135 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Экологический Вклад</title>
+    <title>Экологический Вклад | Eco-Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0fdf4;
-        }
-        .alert-hidden {
-            opacity: 0 !important;
-            pointer-events: none !important;
-            transition: opacity 0.4s ease-in-out;
-        }
-        .tab-button.active {
-            border-color: #10b981; /* border-green-500 */
-            color: #059669; /* text-green-600 */
-            background-color: #d1fae5; /* bg-green-100 */
-        }
-    </style>
+    
 </head>
 <body>
     <div id="app" class="min-h-screen flex flex-col items-center p-4">
 
-        <header class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-4 mb-8 flex justify-between items-center border-t-4 border-green-500">
-            <h1 class="text-3xl font-bold text-green-700">🌱 Eco-Tracker</h1>
+        <header class="w-full max-w-4xl neon-card rounded-xl p-4 mb-8 flex justify-between items-center border-t-4 border-neon-green">
+            <h1 class="text-3xl font-bold font-display neon-glow-text">
+                <span class="text-white text-shadow-none">🌿</span> Eco-Tracker
+            </h1>
             <div id="user-info" class="flex items-center space-x-4 hidden">
-                <span id="welcome-message" class="text-gray-600 text-base"></span>
-                <button id="logout-button" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition duration-150 text-sm">Выход</button>
+                <span id="welcome-message" class="text-gray-400 text-base"></span>
+                <button id="logout-button" class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition duration-150 text-sm neon-btn">Выход</button>
             </div>
         </header>
         
         <div id="message-box" class="fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg text-white font-medium transition-opacity duration-400 alert-hidden"></div>
 
-        <div id="auth-view" class="w-full max-w-sm bg-white p-8 rounded-xl shadow-2xl border-t-4 border-green-500">
-            <h2 id="auth-title" class="text-2xl font-semibold mb-6 text-center text-green-700">Вход</h2>
+        <div id="auth-view" class="w-full max-w-sm neon-card p-8 rounded-xl shadow-2xl border-t-4 border-neon-green">
+            <h2 id="auth-title" class="text-2xl font-bold mb-6 text-center neon-glow-text font-display">Вход в систему</h2>
             <form id="login-form" class="space-y-4">
                 <div>
-                    <label for="login-username" class="block text-sm font-medium text-gray-700">Имя пользователя</label>
-                    <input type="text" id="login-username" required class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
+                    <label for="login-username" class="block text-sm font-medium text-gray-300">Имя пользователя</label>
+                    <input type="text" id="login-username" required class="mt-1 block w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm">
                 </div>
                 <div>
-                    <label for="login-password" class="block text-sm font-medium text-gray-700">Пароль</label>
-                    <input type="password" id="login-password" required class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
+                    <label for="login-password" class="block text-sm font-medium text-gray-300">Пароль</label>
+                    <input type="password" id="login-password" required class="mt-1 block w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm">
                 </div>
-                <button type="submit" class="w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-150">Войти</button>
+                <button type="submit" class="w-full py-3 neon-btn rounded-lg">Войти</button>
             </form>
             <form id="register-form" class="space-y-4 hidden">
-                <div>
-                    <label for="register-username" class="block text-sm font-medium text-gray-700">Имя пользователя</label>
-                    <input type="text" id="register-username" required class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
-                </div>
-                <div>
-                    <label for="register-email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="register-email" required class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
-                </div>
-                <div>
-                    <label for="register-password" class="block text-sm font-medium text-gray-700">Пароль</label>
-                    <input type="password" id="register-password" required minlength="6" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
-                </div>
-                <button type="submit" class="w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-150">Зарегистрироваться</button>
+                <div><label for="register-username" class="block text-sm font-medium text-gray-300">Имя пользователя</label><input type="text" id="register-username" required class="mt-1 block w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm"></div>
+                <div><label for="register-email" class="block text-sm font-medium text-gray-300">Email</label><input type="email" id="register-email" required class="mt-1 block w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm"></div>
+                <div><label for="register-password" class="block text-sm font-medium text-gray-300">Пароль</label><input type="password" id="register-password" required minlength="6" class="mt-1 block w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm"></div>
+                <button type="submit" class="w-full py-3 neon-btn rounded-lg">Зарегистрироваться</button>
             </form>
 
-            <button id="toggle-auth-view" class="mt-4 w-full text-sm text-green-600 hover:text-green-800 transition duration-150">Нет аккаунта? Зарегистрируйтесь!</button>
+            <button id="toggle-auth-view" class="mt-4 w-full text-sm text-neon-green hover:text-neon-blue transition duration-150">Нет аккаунта? <span class="underline">Зарегистрируйтесь!</span></button>
         </div>
 
         <div id="dashboard-view" class="w-full max-w-4xl hidden">
             
-            <div class="flex border-b border-gray-200 mb-6">
-                <button data-tab="record" class="tab-button active px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:border-green-500 hover:text-green-600 transition">Записать Вклад</button>
-                <button data-tab="report" class="tab-button px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:border-green-500 hover:text-green-600 transition">Отчет и История</button>
+            <div class="flex border-b border-gray-700 mb-6">
+                <button data-tab="record" class="tab-button active px-4 py-3 font-semibold border-b-2 border-transparent text-gray-400 hover:border-neon-green hover:text-neon-green transition">Записать Вклад</button>
+                <button data-tab="report" class="tab-button px-4 py-3 font-semibold border-b-2 border-transparent text-gray-400 hover:border-neon-green hover:text-neon-green transition">Отчет и История</button>
             
-                <button data-tab="methodology" class="tab-button px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:border-blue-500 hover:text-blue-600 transition">Методология</button>
-                <button data-tab="admin" id="admin-tab" class="tab-button px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:border-red-500 hover:text-red-600 transition hidden">Админ Панель</button>
+                <button data-tab="methodology" class="tab-button px-4 py-3 font-semibold border-b-2 border-transparent text-gray-400 hover:border-neon-blue hover:text-neon-blue transition">Методология</button>
+                <button data-tab="admin" id="admin-tab" class="tab-button px-4 py-3 font-semibold border-b-2 border-transparent text-gray-400 hover:border-red-500 hover:text-red-500 transition hidden">Админ Панель</button>
             </div>
-            <div id="tab-record" class="tab-content w-full bg-white p-6 rounded-xl shadow-lg border-t-4 border-green-500">
-                <h2 class="text-2xl font-semibold mb-4 text-green-700">Записать Эко-Действие</h2>
+
+            <div id="tab-record" class="tab-content w-full neon-card p-6 rounded-xl border-t-4 border-neon-green">
+                <h2 class="text-2xl font-bold mb-4 neon-glow-text font-display">Записать Эко-Действие</h2>
                 <form id="record-form" class="space-y-4">
                     <div>
-                        <label for="action-id" class="block text-sm font-medium text-gray-700">Эко-Действие</label>
-                        <select id="action-id" required class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
+                        <label for="action-id" class="block text-sm font-medium text-gray-300">Эко-Действие</label>
+                        <select id="action-id" required class="mt-1 block w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm">
                             <option value="">Выберите действие...</option>
                         </select>
                         <p id="action-description" class="text-sm text-gray-500 mt-1"></p>
                     </div>
                     <div class="flex space-x-4">
                         <div class="flex-1">
-                            <label for="quantity" class="block text-sm font-medium text-gray-700">Количество</label>
-                            <input type="number" id="quantity" required min="1" step="0.01" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
+                            <label for="quantity" class="block text-sm font-medium text-gray-300">Количество</label>
+                            <input type="number" id="quantity" required min="1" step="0.01" class="mt-1 block w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm">
                             <p id="quantity-unit" class="text-xs text-gray-500 mt-1">Ед. изм.: -</p>
                         </div>
                         <div class="flex-1">
-                            <label for="record-date" class="block text-sm font-medium text-gray-700">Дата</label>
-                            <input type="date" id="record-date" required value="" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
+                            <label for="record-date" class="block text-sm font-medium text-gray-300">Дата</label>
+                            <input type="date" id="record-date" required value="" class="mt-1 block w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm">
                         </div>
                     </div>
-                    <button type="submit" class="w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-150">Сохранить Запись</button>
+                    <button type="submit" class="w-full py-3 neon-btn rounded-lg">Сохранить Запись</button>
                 </form>
             </div>
 
             <div id="tab-report" class="tab-content w-full hidden">
                 
-                <div class="bg-white p-6 rounded-xl shadow-lg mb-6 border-t-4 border-green-500">
-                    <h2 class="text-2xl font-semibold mb-4 text-green-700">Ваш Экологический Отчет</h2>
+                <div class="neon-card p-6 rounded-xl mb-6 border-t-4 border-neon-green">
+                    <h2 class="text-2xl font-bold mb-4 neon-glow-text font-display">Ваш Экологический Отчет</h2>
                     <div class="flex items-center space-x-2 mb-4">
-                        <label for="report-start-date" class="text-sm font-medium text-gray-700">От:</label>
-                        <input type="date" id="report-start-date" class="p-2 border border-gray-300 rounded-lg text-sm">
-                        <label for="report-end-date" class="text-sm font-medium text-gray-700">До:</label>
-                        <input type="date" id="report-end-date" class="p-2 border border-gray-300 rounded-lg text-sm">
-                        <button id="apply-report-filter" class="px-3 py-1 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition">Применить</button>
+                        <label for="report-start-date" class="text-sm font-medium text-gray-300">От:</label>
+                        <input type="date" id="report-start-date" class="p-2 border border-gray-700 bg-gray-800 text-white rounded-lg text-sm">
+                        <label for="report-end-date" class="text-sm font-medium text-gray-300">До:</label>
+                        <input type="date" id="report-end-date" class="p-2 border border-gray-700 bg-gray-800 text-white rounded-lg text-sm">
+                        <button id="apply-report-filter" class="px-3 py-1 bg-gradient-to-r from-neon-green to-teal-500 text-white text-sm rounded-lg hover:from-teal-500 hover:to-neon-green transition neon-btn-small">Применить</button>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 items-center">
-                        <div class="flex-1 bg-green-50 p-4 rounded-lg text-center shadow-inner w-full">
-                            <p class="text-sm font-medium text-green-800">Общий предотвращенный выброс</p>
-                            <p class="text-4xl font-bold text-green-900 mt-1">
+                    <div class="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-6 items-center">
+                        <div class="flex-1 p-6 rounded-xl text-center w-full border border-neon-green" style="background-color: rgba(57, 255, 20, 0.05);">
+                            <p class="text-sm font-medium text-neon-green">Общий предотвращенный выброс</p>
+                            <p class="text-5xl font-extrabold text-white mt-1">
                                 <span id="total-contribution">0.00</span> 
-                                <span id="contribution-unit" class="text-xl font-semibold">kg CO2e</span>
+                                <span id="contribution-unit" class="text-xl font-semibold text-neon-green">kg CO2e</span>
                             </p>
+                            <p class="text-xs text-gray-400 mt-2">Эквивалент: <span id="tree-equivalent" class="font-semibold text-neon-green">0</span> посаженных деревьев</p>
                         </div>
-                        <div class="flex-1 w-full max-w-sm">
-                            <canvas id="contribution-chart" class="bg-white rounded-lg"></canvas>
-                            <p id="no-data-msg" class="hidden text-center text-gray-500 italic mt-4">Нет данных для отображения за выбранный период.</p>
+                        
+                        <div class="flex-1 w-full max-w-xs relative p-4 neon-card rounded-xl shadow-md">
+                            <canvas id="contribution-chart" class="w-full h-full"></canvas>
+                            <p id="no-data-msg" class="hidden absolute inset-0 flex items-center justify-center text-gray-500 italic p-4 text-center">Нет данных для отображения за выбранный период.</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-green-500">
-                    <h2 class="text-2xl font-semibold mb-4 text-green-700">Ваша История Записей</h2>
+                
+                <div class="neon-card p-6 rounded-xl border-t-4 border-neon-green">
+                    <h2 class="text-2xl font-bold mb-4 neon-glow-text font-display">Ваша История Записей</h2>
                     <div id="records-list" class="space-y-3">
                         <p class="text-gray-500 italic">Загрузка ваших записей...</p>
                     </div>
@@ -139,66 +122,64 @@
             </div>
 
             <div id="tab-methodology" class="tab-content w-full hidden">
-                <div class="bg-white p-6 rounded-xl shadow-2xl border-t-4 border-blue-500">
-                    <h2 class="text-3xl font-bold mb-4 text-blue-700 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <div class="neon-card p-6 rounded-xl shadow-2xl border-t-4 border-neon-blue">
+                    <h2 class="text-3xl font-bold mb-4 neon-glow-text font-display flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0v-6a2 2 0 012-2h2a2 2 0 012 2v6a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
-                        Как Рассчитывается Ваш Вклад?
+                        Методология Расчетов
                     </h2>
                     
-                    <p class="mb-4 text-gray-700">Наш Eco-Tracker использует простой и прозрачный метод для оценки вашего положительного экологического вклада, который выражается в предотвращенном выбросе парниковых газов, эквивалентных CO2 (CO2e).</p>
+                    <p class="mb-4 text-gray-300">Наш Eco-Tracker использует простой и прозрачный метод для оценки вашего положительного экологического вклада, который выражается в предотвращенном выбросе парниковых газов, эквивалентных CO2 (CO2e).</p>
 
-                    <h3 class="text-xl font-semibold mt-6 mb-3 text-blue-600">Формула Расчета</h3>
-                    <div class="bg-blue-50 p-4 rounded-lg shadow-inner text-center mb-6 border border-blue-200">
-                        <code class="text-2xl font-mono text-blue-800 font-bold block">
+                    <h3 class="text-xl font-bold mt-6 mb-3 text-neon-blue font-display">Формула Расчета</h3>
+                    <div class="p-4 rounded-lg shadow-inner text-center mb-6 border border-neon-blue" style="background-color: rgba(0, 191, 255, 0.05);">
+                        <code class="text-xl font-mono text-neon-green font-bold block">
                             Вклад (kg CO2e) = Количество Действия &times; Коэффициент Выброса
                         </code>
                     </div>
                     
-                    <ul class="list-disc list-inside space-y-3 text-gray-700">
-                        <li><strong class="text-green-700">Количество Действия:</strong> Это значение, которое вы вводите (например, 5 кг сданной макулатуры, 2 часа поездки на велосипеде).</li>
-                        <li><strong class="text-yellow-700">Коэффициент Выброса:</strong> Это предварительно рассчитанное значение, показывающее, сколько кг CO2e предотвращается или поглощается на единицу действия.</li>
+                    <ul class="list-disc list-inside space-y-3 text-gray-300">
+                        <li><strong class="text-neon-green">Количество Действия:</strong> Это значение, которое вы вводите (например, 5 кг сданной макулатуры, 2 часа поездки на велосипеде).</li>
+                        <li><strong class="text-yellow-400">Коэффициент Выброса:</strong> Это предварительно рассчитанное значение, показывающее, сколько кг CO2e предотвращается или поглощается на единицу действия.</li>
                     </ul>
 
-                    <h3 class="text-xl font-semibold mt-6 mb-3 text-blue-600">Источники и Управление Коэффициентами</h3>
-                    <p class="mb-4 text-gray-700">Коэффициенты выбросов основаны на общепризнанных научных данных, национальных и международных экологических стандартах, а также на отраслевых отчетах (например, расчеты Carbon Footprint, данные EPA, методологии Green House Gas Protocol).</p>
+                    <h3 class="text-xl font-bold mt-6 mb-3 text-neon-blue font-display">Источники и Управление Коэффициентами</h3>
+                    <p class="mb-4 text-gray-300">Коэффициенты выбросов основаны на общепризнанных научных данных, национальных и международных экологических стандартах, а также на отраслевых отчетах.</p>
                     
-                    <p class="bg-yellow-100 p-3 rounded-lg text-sm text-yellow-800 border-l-4 border-yellow-500">
-                        Для обеспечения актуальности и точности данных, коэффициенты <strong class="font-semibold">могут быть обновлены администратором</strong> системы. Это позволяет быстро адаптироваться к изменениям в технологиях и стандартах оценки воздействия на окружающую среду.
+                    <p class="p-3 rounded-lg text-sm border-l-4 border-yellow-500 text-yellow-300" style="background-color: #2b2100;">
+                        Для обеспечения актуальности и точности данных, коэффициенты <strong class="font-semibold text-white">могут быть обновлены администратором</strong> системы.
                     </p>
-
                 </div>
             </div>
 
             <div id="admin-panel" class="tab-content w-full hidden">
-                <h2 class="text-2xl font-semibold mb-4 text-red-700">Административная Панель</h2>
+                <h2 class="text-2xl font-bold mb-4 text-red-500 font-display">Административная Панель</h2>
                 
-                <section class="mb-8 border border-gray-200 rounded-lg p-4 bg-yellow-50">
-                    <h3 class="text-xl font-semibold mb-3 text-yellow-800">Управление Коэффициентами Действий</h3>
+                <section class="mb-8 border border-gray-700 rounded-lg p-4" style="background-color: #231d0d;">
+                    <h3 class="text-xl font-bold mb-3 text-yellow-500 font-display">Управление Коэффициентами Действий</h3>
                     <div id="admin-actions-list" class="space-y-4">
                         <p class="text-gray-500 italic">Загрузка действий...</p>
-                        
                     </div>
                 </section>
                 
-                <section class="mb-8 border border-gray-200 rounded-lg p-4 bg-green-50">
-                    <h3 class="text-xl font-semibold mb-3 text-green-700">Добавить Новое Эко-Действие</h3>
+                <section class="mb-8 border border-gray-700 rounded-lg p-4" style="background-color: #0e201b;">
+                    <h3 class="text-xl font-bold mb-3 text-neon-green font-display">Добавить Новое Эко-Действие</h3>
                     <form id="admin-add-action-form" class="space-y-3">
-                        <input type="text" id="add-name" placeholder="Название (обязательно)" required class="w-full p-2 border rounded-lg">
-                        <input type="text" id="add-description" placeholder="Описание" class="w-full p-2 border rounded-lg">
-                        <input type="text" id="add-category" placeholder="Категория (обязательно)" required class="w-full p-2 border rounded-lg">
-                        <input type="text" id="add-unit-of-measure" placeholder="Единица измерения (обязательно, например, 'часов', 'кг')" required class="w-full p-2 border rounded-lg">
+                        <input type="text" id="add-name" placeholder="Название (обязательно)" required class="w-full p-2 border border-gray-700 bg-gray-800 text-white rounded-lg">
+                        <input type="text" id="add-description" placeholder="Описание" class="w-full p-2 border border-gray-700 bg-gray-800 text-white rounded-lg">
+                        <input type="text" id="add-category" placeholder="Категория (обязательно)" required class="w-full p-2 border border-gray-700 bg-gray-800 text-white rounded-lg">
+                        <input type="text" id="add-unit-of-measure" placeholder="Единица измерения (обязательно, например, 'часов', 'кг')" required class="w-full p-2 border border-gray-700 bg-gray-800 text-white rounded-lg">
                         <div class="flex space-x-2">
-                            <input type="number" id="add-coefficient-value" placeholder="Коэффициент выброса (обязательно)" required min="0.001" step="0.001" class="flex-grow p-2 border rounded-lg">
-                            <input type="text" id="add-emission-unit" placeholder="Ед. изм. выброса (по умолчанию: kg CO2e)" class="p-2 border rounded-lg w-1/3">
+                            <input type="number" id="add-coefficient-value" placeholder="Коэффициент выброса (обязательно)" required min="0.001" step="0.001" class="flex-grow p-2 border border-gray-700 bg-gray-800 text-white rounded-lg">
+                            <input type="text" id="add-emission-unit" placeholder="Ед. изм. выброса (по умолчанию: kg CO2e)" class="p-2 border border-gray-700 bg-gray-800 text-white rounded-lg w-1/3">
                         </div>
-                        <button type="submit" class="w-full py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">Добавить Действие</button>
+                        <button type="submit" class="w-full py-2 bg-gradient-to-r from-neon-green to-teal-500 text-white font-semibold rounded-lg hover:from-teal-500 hover:to-neon-green transition neon-btn-small">Добавить Действие</button>
                     </form>
                 </section>
 
-                <section class="mb-8 border border-gray-200 rounded-lg p-4 bg-red-50">
-                    <h3 class="text-xl font-semibold mb-3 text-red-700">Администрирование Пользователей (Блокировка/Роли)</h3>
+                <section class="mb-8 border border-gray-700 rounded-lg p-4" style="background-color: #2b0c0c;">
+                    <h3 class="text-xl font-bold mb-3 text-red-500 font-display">Администрирование Пользователей (Блокировка/Роли)</h3>
                     
                     <form id="admin-user-search-form" class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
                         <input 
@@ -207,11 +188,11 @@
                             placeholder="Имя пользователя или Email (мин. 2 символа)" 
                             required 
                             minlength="2"
-                            class="flex-grow p-2 border border-red-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+                            class="flex-grow p-2 border border-red-500 bg-gray-800 text-white rounded-lg focus:ring-red-500 focus:border-red-500"
                         >
                         <button 
                             type="submit" 
-                            class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition duration-150"
+                            class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition duration-150 neon-btn-small"
                         >
                             Найти Пользователей
                         </button>
@@ -225,21 +206,20 @@
             </div>
         </div>
         
-  
-        <div id="edit-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-            <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm">
-                <h3 class="text-xl font-semibold mb-4 text-yellow-700">Редактировать Коэффициент</h3>
-                <p id="modal-action-name" class="mb-3 text-gray-700 font-medium"></p>
+        <div id="edit-modal" class="fixed inset-0 bg-gray-900 bg-opacity-70 z-50 hidden flex items-center justify-center p-4">
+            <div class="neon-card p-6 rounded-xl shadow-2xl w-full max-w-sm border-t-4 border-yellow-500">
+                <h3 class="text-xl font-bold mb-4 text-yellow-500 font-display">Редактировать Коэффициент</h3>
+                <p id="modal-action-name" class="mb-3 text-gray-300 font-medium"></p>
                 <form id="admin-edit-coefficient-form" class="space-y-4">
                     <input type="hidden" id="modal-action-id">
                     <input type="hidden" id="modal-coefficient-id">
                     <div>
-                        <label for="modal-coefficient-value" class="block text-sm font-medium text-gray-700">Новое значение коэффициента</label>
-                        <input type="number" id="modal-coefficient-value" required min="0.001" step="0.001" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                        <label for="modal-coefficient-value" class="block text-sm font-medium text-gray-300">Новое значение коэффициента</label>
+                        <input type="number" id="modal-coefficient-value" required min="0.001" step="0.001" class="mt-1 block w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg">
                     </div>
                     <div class="flex justify-end space-x-3">
-                        <button type="button" id="modal-close" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition">Отмена</button>
-                        <button type="submit" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Сохранить</button>
+                        <button type="button" id="modal-close" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition neon-btn-small">Отмена</button>
+                        <button type="submit" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition neon-btn-small">Сохранить</button>
                     </div>
                 </form>
             </div>
@@ -248,5 +228,5 @@
 
     </div>
     <script src="main.js"></script>
-    </body>
+</body>
 </html>

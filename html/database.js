@@ -1,6 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./eco_contribution.db');
 const bcrypt = require('bcryptjs');
+const DataRepository = require('./DataRepository'); 
+const db = new sqlite3.Database('./eco_contribution.db');
+const repository = new DataRepository();
 
 const salt = bcrypt.genSaltSync(10);
 const adminPasswordHash = bcrypt.hashSync('adminpass', salt);
@@ -13,14 +15,15 @@ function initializeDatabase() {
             password_hash TEXT NOT NULL,
             email TEXT UNIQUE,
             registration_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-            is_admin BOOLEAN DEFAULT 0
+            is_admin BOOLEAN DEFAULT 0,
+            is_blocked BOOLEAN DEFAULT 0
         )`);
 
         db.run(`CREATE TABLE IF NOT EXISTS Coefficients (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             value REAL NOT NULL,
             unit_description TEXT,
-            emission_unit TEXT DEFAULT 'kg CO2e', -- Например, kg эквивалента CO2
+            emission_unit TEXT DEFAULT 'kg CO2e', 
             last_updated DATETIME DEFAULT CURRENT_TIMESTAMP
         )`);
 
@@ -28,41 +31,44 @@ function initializeDatabase() {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             description TEXT,
-            category TEXT NOT NULL, -- Категория: 'Отходы', 'Транспорт', 'Энергия'
-            unit_of_measure TEXT NOT NULL, -- Единицы: 'кг', 'км', 'кВт*ч'
+            category TEXT NOT NULL, 
+            unit_of_measure TEXT NOT NULL, 
             coefficient_id INTEGER,
             FOREIGN KEY (coefficient_id) REFERENCES Coefficients(id)
         )`);
 
         db.run(`CREATE TABLE IF NOT EXISTS Records (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER NOT NULL,
-            action_id INTEGER NOT NULL,
-            quantity REAL NOT NULL, -- Количество совершенных единиц
-            record_date DATE NOT NULL,
+            user_id INTEGER,
+            action_id INTEGER,
+            quantity REAL NOT NULL,
+            record_date DATE DEFAULT (strftime('%Y-%m-%d', 'now')),
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES Users(id),
             FOREIGN KEY (action_id) REFERENCES Actions(id)
         )`);
+
         db.get("SELECT COUNT(*) AS count FROM Coefficients", (err, row) => {
             if (row.count === 0) {
-                const stmt = db.prepare("INSERT INTO Coefficients (value, unit_description) VALUES (?, ?)");
-                stmt.run(2.5, "Сокращение выбросов CO2 на 2.5 кг за каждый 1 кг переработанного пластика.");
-                stmt.run(0.2, "Сокращение выбросов CO2 на 0.2 кг за каждый 1 км, пройденный пешком/велосипедом.");
-                stmt.run(0.7, "Сокращение выбросов CO2 на 0.7 кг за каждый 1 кВт*ч сэкономленной энергии.");
-                stmt.finalize();
-                console.log("Initial coefficients added.");
-                db.all("SELECT id FROM Coefficients", (err, rows) => {
-                    if (rows.length >= 3) {
-                        const actionStmt = db.prepare("INSERT INTO Actions (name, description, category, unit_of_measure, coefficient_id) VALUES (?, ?, ?, ?, ?)");
-                        actionStmt.run("Переработка пластика", "Отправка пластика на переработку.", "Отходы", "кг", rows[0].id);
-                        actionStmt.run("Поездка на велосипеде", "Использование велосипеда вместо автомобиля.", "Транспорт", "км", rows[1].id);
-                        actionStmt.run("Экономия энергии", "Снижение потребления электроэнергии.", "Энергия", "кВт*ч", rows[2].id);
-                        actionStmt.finalize();
-                        console.log("Initial actions added.");
-                    }
+                const coeffStmt = db.prepare("INSERT INTO Coefficients (value, emission_unit) VALUES (?, ?)");
+                coeffStmt.run(0.12, 'kg CO2e'); 
+                coeffStmt.run(0.20, 'kg CO2e'); 
+                coeffStmt.run(0.50, 'kg CO2e'); 
+                coeffStmt.finalize(() => {
+                    db.all("SELECT id FROM Coefficients ORDER BY id ASC LIMIT 3", (err, rows) => {
+                        if (rows && rows.length === 3) {
+                            const actionStmt = db.prepare("INSERT INTO Actions (name, description, category, unit_of_measure, coefficient_id) VALUES (?, ?, ?, ?, ?)");
+                            actionStmt.run("Сортировка мусора", "Передача отходов на переработку.", "Отходы", "кг", rows[0].id);
+                            actionStmt.run("Использование велосипеда", "Использование велосипеда вместо автомобиля.", "Транспорт", "км", rows[1].id);
+                            actionStmt.run("Экономия энергии", "Снижение потребления электроэнергии.", "Энергия", "кВт*ч", rows[2].id);
+                            actionStmt.finalize();
+                            console.log("Initial actions added.");
+                        }
+                    });
                 });
             }
         });
+
         db.get("SELECT COUNT(*) AS count FROM Users WHERE is_admin = 1", (err, row) => {
             if (row.count === 0) {
                 db.run("INSERT INTO Users (username, password_hash, email, is_admin) VALUES (?, ?, ?, ?)",
@@ -80,10 +86,7 @@ function initializeDatabase() {
                     });
             }
         });
-
     });
 }
-module.exports = {
-    db,
-    initializeDatabase
-};
+
+module.exports = { db, initializeDatabase, repository };
