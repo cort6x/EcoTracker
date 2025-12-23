@@ -1,6 +1,7 @@
 const { db } = require('./database');
 
 class DataRepository {
+<<<<<<< HEAD
     constructor(db) {
         this.db = db;
     }
@@ -11,20 +12,36 @@ class DataRepository {
             if (err) return reject(err);
             resolve({ id: this.lastID, changes: this.changes });
         });
+=======
+    _run(sql, params = []) {
+        return new Promise((resolve, reject) => {
+            db.run(sql, params, function(err) {
+                if (err) return reject(err);
+                resolve({ id: this.lastID, changes: this.changes });
+            });
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
         });
     }
 
     _get(sql, params = []) {
         return new Promise((resolve, reject) => {
+<<<<<<< HEAD
         this.db.get(sql, params, (err, row) => {
             if (err) return reject(err);
             resolve(row);
         });
+=======
+            db.get(sql, params, (err, row) => {
+                if (err) return reject(err);
+                resolve(row);
+            });
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
         });
     }
 
     _all(sql, params = []) {
         return new Promise((resolve, reject) => {
+<<<<<<< HEAD
         this.db.all(sql, params, (err, rows) => {
             if (err) return reject(err);
             resolve(rows);
@@ -33,6 +50,15 @@ class DataRepository {
     }
 
 
+=======
+            db.all(sql, params, (err, rows) => {
+                if (err) return reject(err);
+                resolve(rows);
+            });
+        });
+    }
+
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
     async findUserByUsername(username) {
         return this._get(`SELECT * FROM Users WHERE username = ?`, [username]);
     }

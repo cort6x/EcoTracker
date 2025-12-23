@@ -3,10 +3,15 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const { initializeDatabase, repository } = require('./database'); 
 const { EcoService, userSessions } = require('./EcoService');
+<<<<<<< HEAD
 const { specs, swaggerUi } = require('./swagger');
 
 const app = express();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+=======
+
+const app = express();
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 const PORT = 3000;
 
 const ecoService = new EcoService(repository);
@@ -21,7 +26,10 @@ app.use((req, res, next) => {
     }
     next();
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]; 
@@ -49,6 +57,7 @@ const checkAdmin = (req, res, next) => {
 };
 
 // --- AUTH ROUTES ---
+<<<<<<< HEAD
 
 /**
  * @swagger
@@ -95,6 +104,8 @@ const checkAdmin = (req, res, next) => {
  *       500:
  *         description: Ошибка сервера
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.post('/api/register', async (req, res) => {
     try {
         const { username, email, password } = req.body;
@@ -106,6 +117,7 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /api/login:
@@ -158,6 +170,8 @@ app.post('/api/register', async (req, res) => {
  *       500:
  *         description: Ошибка сервера
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.post('/api/login', async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -171,6 +185,7 @@ app.post('/api/login', async (req, res) => {
 
 app.use('/api', authenticateToken);
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /api/user:
@@ -200,6 +215,8 @@ app.use('/api', authenticateToken);
  *       401:
  *         description: Не авторизован
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.get('/api/user', async (req, res) => {
     try {
         const user = await ecoService.getCurrentUser(req.sessionData.userId);
@@ -209,6 +226,7 @@ app.get('/api/user', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /api/record:
@@ -249,6 +267,8 @@ app.get('/api/user', async (req, res) => {
  *       401:
  *         description: Не авторизован
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.post('/api/record', async (req, res) => {
     try {
         const { action_id, quantity, record_date } = req.body;
@@ -259,6 +279,7 @@ app.post('/api/record', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /api/records:
@@ -290,6 +311,8 @@ app.post('/api/record', async (req, res) => {
  *       401:
  *         description: Не авторизован
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.get('/api/records', async (req, res) => {
     try {
         const records = await ecoService.getUserRecords(req.sessionData.userId);
@@ -299,6 +322,7 @@ app.get('/api/records', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /api/report:
@@ -351,6 +375,8 @@ app.get('/api/records', async (req, res) => {
  *       401:
  *         description: Не авторизован
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.get('/api/report', async (req, res) => {
     try {
         const { startDate, endDate } = req.query;
@@ -361,6 +387,7 @@ app.get('/api/report', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /api/actions:
@@ -398,6 +425,8 @@ app.get('/api/report', async (req, res) => {
  *       401:
  *         description: Не авторизован
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.get('/api/actions', async (req, res) => {
     try {
         const actions = await ecoService.getAllActions();
@@ -408,6 +437,7 @@ app.get('/api/actions', async (req, res) => {
 });
 
 app.use('/api/admin', checkAdmin);
+<<<<<<< HEAD
 
 /**
  * @swagger
@@ -453,6 +483,8 @@ app.use('/api/admin', checkAdmin);
  *       403:
  *         description: Доступ запрещен (не администратор)
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.post('/api/admin/actions', async (req, res) => {
     try {
         const result = await ecoService.addAction(req.body);
@@ -462,6 +494,7 @@ app.post('/api/admin/actions', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /api/admin/actions/{id}:
@@ -501,6 +534,8 @@ app.post('/api/admin/actions', async (req, res) => {
  *       403:
  *         description: Доступ запрещен
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.put('/api/admin/actions/:id', async (req, res) => {
     try {
         const { coefficient_id, coefficient_value } = req.body;
@@ -511,6 +546,7 @@ app.put('/api/admin/actions/:id', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /api/admin/users/search:
@@ -551,6 +587,8 @@ app.put('/api/admin/actions/:id', async (req, res) => {
  *       403:
  *         description: Доступ запрещен
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.get('/api/admin/users/search', async (req, res) => {
     try {
         const users = await ecoService.searchUsers(req.query.query);
@@ -560,6 +598,7 @@ app.get('/api/admin/users/search', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /api/admin/users/{id}/block:
@@ -596,6 +635,8 @@ app.get('/api/admin/users/search', async (req, res) => {
  *       403:
  *         description: Доступ запрещен
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.put('/api/admin/users/:id/block', async (req, res) => {
     try {
         const { is_blocked } = req.body;
@@ -605,6 +646,7 @@ app.put('/api/admin/users/:id/block', async (req, res) => {
         res.status(error.status || 500).send({ message: error.message || 'Ошибка при обновлении статуса пользователя.' });
     }
 });
+<<<<<<< HEAD
 
 /**
  * @swagger
@@ -642,6 +684,8 @@ app.put('/api/admin/users/:id/block', async (req, res) => {
  *       403:
  *         description: Доступ запрещен
  */
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.put('/api/admin/users/:id/role', async (req, res) => {
     try {
         const { is_admin } = req.body;
@@ -652,6 +696,10 @@ app.put('/api/admin/users/:id/role', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -661,5 +709,9 @@ initializeDatabase();
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
+<<<<<<< HEAD
     console.log(`Swagger UI доступен по адресу: http://localhost:${PORT}/api-docs`);
 });
+=======
+});
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2

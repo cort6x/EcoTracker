@@ -2,7 +2,11 @@ const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
 const DataRepository = require('./DataRepository'); 
 const db = new sqlite3.Database('./eco_contribution.db');
+<<<<<<< HEAD
 const repository = new DataRepository(db);
+=======
+const repository = new DataRepository();
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 
 const salt = bcrypt.genSaltSync(10);
 const adminPasswordHash = bcrypt.hashSync('adminpass', salt);
@@ -47,7 +51,10 @@ function initializeDatabase() {
             FOREIGN KEY (user_id) REFERENCES Users(id),
             FOREIGN KEY (action_id) REFERENCES Actions(id)
         )`);
+<<<<<<< HEAD
         
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
 
         db.get("SELECT COUNT(*) AS count FROM Coefficients", (err, row) => {
             if (row.count === 0) {

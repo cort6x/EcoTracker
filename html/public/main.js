@@ -62,6 +62,7 @@ class EcoApiFacade {
     }
 
     async addAction(actionData) {
+<<<<<<< HEAD
         return this._request('/admin/actions', 'POST', actionData);
     }
 
@@ -74,6 +75,18 @@ class EcoApiFacade {
 
     async searchUsers(query) {
         return this._request(`/admin/users/search?query=${encodeURIComponent(query)}`);
+=======
+        return this._request('/actions', 'POST', actionData);
+    }
+    async updateCoefficient(actionId, coefficientId, value) {
+        return this._request(`/actions/${actionId}`, 'PUT', { 
+            coefficient_value: value, 
+            coefficient_id: coefficientId 
+        });
+    }
+    async searchUsers(query) {
+        return this._request(`/users/search?query=${encodeURIComponent(query)}`);
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
     }
     async toggleBlockUser(userId, currentStatus) {
        
@@ -327,6 +340,7 @@ class AppContext {
     renderRecordsList(records) {
         const list = this.elements.recordsList;
         list.innerHTML = '';
+<<<<<<< HEAD
 
         if (!records.length) {
             list.innerHTML = `<p class="text-gray-500 italic">Записей пока нет.</p>`;
@@ -354,12 +368,33 @@ class AppContext {
                 <p class="text-lg font-bold text-green-700">-${contribution.toFixed(2)}</p>
                 <p class="text-xs text-green-600">${emissionUnit}</p>
             </div>
+=======
+        if (!records.length) {
+            list.innerHTML = '<p class="text-gray-500 italic">Нет записей.</p>';
+            return;
+        }
+        records.forEach(r => {
+            const div = document.createElement('div');
+            div.className = 'p-3 bg-gray-50 rounded-lg shadow-sm border-l-4 border-green-400 flex justify-between items-center';
+            div.innerHTML = `
+                <div>
+                    <p class="font-semibold text-gray-800">${r.action_name}</p>
+                    <p class="text-sm text-gray-600">${r.quantity} ${r.unit_of_measure} | ${r.record_date}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-lg font-bold text-green-700">-${r.contribution.toFixed(2)}</p>
+                    <p class="text-xs text-green-600">${r.emission_unit}</p>
+                </div>
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
             `;
             list.appendChild(div);
         });
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
     renderReport(report) {
         const totalEl = document.getElementById('total-contribution');
         const unitEl = document.getElementById('contribution-unit');

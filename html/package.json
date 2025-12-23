@@ -1,5 +1,6 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "body-parser": "^2.2.1",
@@ -9,5 +10,11 @@
     "sqlite3": "^5.1.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
+=======
+    "bcryptjs": "^3.0.3",
+    "database": "^0.0.2",
+    "express": "^5.1.0",
+    "node": "^25.2.0"
+>>>>>>> 421e573558b9ea4c8c85f141fb2c7eada2638fe2
   }
 }
